@@ -13,16 +13,23 @@ public class TimerTriggeredFunction
     [FunctionName("TimerTriggeredFunction")]
     public async Task Run([TimerTrigger("0 */1 * * * *")] TimerInfo myTimer, ILogger log)
     {
-        log.LogInformation($"Timer triggered at: {DateTime.Now}");
+        try
+        {
+            log.LogInformation($"Timer triggered at: {DateTime.Now}");
 
-        HttpResponseMessage response = await client.GetAsync("https://testapp1989-hydbctbeewbthab4.westeurope-01.azurewebsites.net/WeatherForecast/unfreeze");
-        if (response.IsSuccessStatusCode)
-        {
-            log.LogInformation("Request succeeded.");
+            HttpResponseMessage response = await client.GetAsync("https://testapp1989-hydbctbeewbthab4.westeurope-01.azurewebsites.net/WeatherForecast/unfreeze");
+            if (response.IsSuccessStatusCode)
+            {
+                log.LogInformation("Request succeeded.");
+            }
+            else
+            {
+                log.LogError("Request failed.");
+            }
         }
-        else
+        catch (Exception ex) 
         {
-            log.LogError("Request failed.");
+            log.LogError($"Error of TimerTriggeredFunction:{ex.Message}"); 
         }
     }
 }
