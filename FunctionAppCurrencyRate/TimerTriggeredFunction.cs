@@ -11,7 +11,7 @@ public class TimerTriggeredFunction
     private static readonly HttpClient client = new HttpClient();
 
     [FunctionName("TimerTriggeredFunction")]
-    public async Task Run([TimerTrigger("0 * * * *")] TimerInfo myTimer, ILogger log)
+    public async Task Run([TimerTrigger("45 * * * *")] TimerInfo myTimer, ILogger log)
     {
         try
         {
